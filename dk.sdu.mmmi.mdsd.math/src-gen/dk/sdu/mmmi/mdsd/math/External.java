@@ -49,13 +49,15 @@ public interface External extends EObject
   void setName(String value);
 
   /**
-   * Returns the value of the '<em><b>Parameters</b></em>' containment reference list.
+   * Returns the value of the '<em><b>Parameters</b></em>' attribute list.
    * The list contents are of type {@link dk.sdu.mmmi.mdsd.math.ParmeterTypes}.
+   * The literals are from the enumeration {@link dk.sdu.mmmi.mdsd.math.ParmeterTypes}.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @return the value of the '<em>Parameters</em>' containment reference list.
+   * @return the value of the '<em>Parameters</em>' attribute list.
+   * @see dk.sdu.mmmi.mdsd.math.ParmeterTypes
    * @see dk.sdu.mmmi.mdsd.math.MathPackage#getExternal_Parameters()
-   * @model containment="true"
+   * @model unique="false"
    * @generated
    */
   EList<ParmeterTypes> getParameters();

@@ -87,13 +87,6 @@ public class MathSwitch<T> extends Switch<T>
         if (result == null) result = defaultCase(theEObject);
         return result;
       }
-      case MathPackage.PARMETER_TYPES:
-      {
-        ParmeterTypes parmeterTypes = (ParmeterTypes)theEObject;
-        T result = caseParmeterTypes(parmeterTypes);
-        if (result == null) result = defaultCase(theEObject);
-        return result;
-      }
       case MathPackage.PROGRAM:
       {
         Program program = (Program)theEObject;
@@ -116,12 +109,28 @@ public class MathSwitch<T> extends Switch<T>
         if (result == null) result = defaultCase(theEObject);
         return result;
       }
+      case MathPackage.EXTERNAL_USE:
+      {
+        ExternalUse externalUse = (ExternalUse)theEObject;
+        T result = caseExternalUse(externalUse);
+        if (result == null) result = caseExpression(externalUse);
+        if (result == null) result = defaultCase(theEObject);
+        return result;
+      }
       case MathPackage.LET_BINDING:
       {
         LetBinding letBinding = (LetBinding)theEObject;
         T result = caseLetBinding(letBinding);
         if (result == null) result = caseExpression(letBinding);
         if (result == null) result = caseBinding(letBinding);
+        if (result == null) result = defaultCase(theEObject);
+        return result;
+      }
+      case MathPackage.PARENTHESIS:
+      {
+        Parenthesis parenthesis = (Parenthesis)theEObject;
+        T result = caseParenthesis(parenthesis);
+        if (result == null) result = caseExpression(parenthesis);
         if (result == null) result = defaultCase(theEObject);
         return result;
       }
@@ -217,22 +226,6 @@ public class MathSwitch<T> extends Switch<T>
   }
 
   /**
-   * Returns the result of interpreting the object as an instance of '<em>Parmeter Types</em>'.
-   * <!-- begin-user-doc -->
-   * This implementation returns null;
-   * returning a non-null result will terminate the switch.
-   * <!-- end-user-doc -->
-   * @param object the target of the switch.
-   * @return the result of interpreting the object as an instance of '<em>Parmeter Types</em>'.
-   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
-   * @generated
-   */
-  public T caseParmeterTypes(ParmeterTypes object)
-  {
-    return null;
-  }
-
-  /**
    * Returns the result of interpreting the object as an instance of '<em>Program</em>'.
    * <!-- begin-user-doc -->
    * This implementation returns null;
@@ -281,6 +274,22 @@ public class MathSwitch<T> extends Switch<T>
   }
 
   /**
+   * Returns the result of interpreting the object as an instance of '<em>External Use</em>'.
+   * <!-- begin-user-doc -->
+   * This implementation returns null;
+   * returning a non-null result will terminate the switch.
+   * <!-- end-user-doc -->
+   * @param object the target of the switch.
+   * @return the result of interpreting the object as an instance of '<em>External Use</em>'.
+   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+   * @generated
+   */
+  public T caseExternalUse(ExternalUse object)
+  {
+    return null;
+  }
+
+  /**
    * Returns the result of interpreting the object as an instance of '<em>Let Binding</em>'.
    * <!-- begin-user-doc -->
    * This implementation returns null;
@@ -292,6 +301,22 @@ public class MathSwitch<T> extends Switch<T>
    * @generated
    */
   public T caseLetBinding(LetBinding object)
+  {
+    return null;
+  }
+
+  /**
+   * Returns the result of interpreting the object as an instance of '<em>Parenthesis</em>'.
+   * <!-- begin-user-doc -->
+   * This implementation returns null;
+   * returning a non-null result will terminate the switch.
+   * <!-- end-user-doc -->
+   * @param object the target of the switch.
+   * @return the result of interpreting the object as an instance of '<em>Parenthesis</em>'.
+   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+   * @generated
+   */
+  public T caseParenthesis(Parenthesis object)
   {
     return null;
   }

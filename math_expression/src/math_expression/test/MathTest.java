@@ -2,7 +2,6 @@ package math_expression.test;
 
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
-
 import math_expression.*;
 
 public class MathTest {

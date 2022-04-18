@@ -10,18 +10,15 @@ import dk.sdu.mmmi.mdsd.math.ParmeterTypes;
 import java.util.Collection;
 
 import org.eclipse.emf.common.notify.Notification;
-import org.eclipse.emf.common.notify.NotificationChain;
 
 import org.eclipse.emf.common.util.EList;
 
 import org.eclipse.emf.ecore.EClass;
-import org.eclipse.emf.ecore.InternalEObject;
 
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
 
-import org.eclipse.emf.ecore.util.EObjectContainmentEList;
-import org.eclipse.emf.ecore.util.InternalEList;
+import org.eclipse.emf.ecore.util.EDataTypeEList;
 
 /**
  * <!-- begin-user-doc -->
@@ -60,7 +57,7 @@ public class ExternalImpl extends MinimalEObjectImpl.Container implements Extern
   protected String name = NAME_EDEFAULT;
 
   /**
-   * The cached value of the '{@link #getParameters() <em>Parameters</em>}' containment reference list.
+   * The cached value of the '{@link #getParameters() <em>Parameters</em>}' attribute list.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @see #getParameters()
@@ -125,25 +122,9 @@ public class ExternalImpl extends MinimalEObjectImpl.Container implements Extern
   {
     if (parameters == null)
     {
-      parameters = new EObjectContainmentEList<ParmeterTypes>(ParmeterTypes.class, this, MathPackage.EXTERNAL__PARAMETERS);
+      parameters = new EDataTypeEList<ParmeterTypes>(ParmeterTypes.class, this, MathPackage.EXTERNAL__PARAMETERS);
     }
     return parameters;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  @Override
-  public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs)
-  {
-    switch (featureID)
-    {
-      case MathPackage.EXTERNAL__PARAMETERS:
-        return ((InternalEList<?>)getParameters()).basicRemove(otherEnd, msgs);
-    }
-    return super.eInverseRemove(otherEnd, featureID, msgs);
   }
 
   /**
@@ -237,6 +218,8 @@ public class ExternalImpl extends MinimalEObjectImpl.Container implements Extern
     StringBuilder result = new StringBuilder(super.toString());
     result.append(" (name: ");
     result.append(name);
+    result.append(", parameters: ");
+    result.append(parameters);
     result.append(')');
     return result.toString();
   }

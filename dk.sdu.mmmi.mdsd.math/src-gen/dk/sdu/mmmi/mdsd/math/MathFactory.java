@@ -42,15 +42,6 @@ public interface MathFactory extends EFactory
   External createExternal();
 
   /**
-   * Returns a new object of class '<em>Parmeter Types</em>'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return a new object of class '<em>Parmeter Types</em>'.
-   * @generated
-   */
-  ParmeterTypes createParmeterTypes();
-
-  /**
    * Returns a new object of class '<em>Program</em>'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
@@ -78,6 +69,15 @@ public interface MathFactory extends EFactory
   Expression createExpression();
 
   /**
+   * Returns a new object of class '<em>External Use</em>'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return a new object of class '<em>External Use</em>'.
+   * @generated
+   */
+  ExternalUse createExternalUse();
+
+  /**
    * Returns a new object of class '<em>Let Binding</em>'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
@@ -85,6 +85,15 @@ public interface MathFactory extends EFactory
    * @generated
    */
   LetBinding createLetBinding();
+
+  /**
+   * Returns a new object of class '<em>Parenthesis</em>'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return a new object of class '<em>Parenthesis</em>'.
+   * @generated
+   */
+  Parenthesis createParenthesis();
 
   /**
    * Returns a new object of class '<em>Binding</em>'.

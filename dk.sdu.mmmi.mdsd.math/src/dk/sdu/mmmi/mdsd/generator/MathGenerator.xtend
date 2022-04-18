@@ -20,6 +20,8 @@ import org.eclipse.xtext.generator.AbstractGenerator
 import org.eclipse.xtext.generator.IFileSystemAccess2
 import org.eclipse.xtext.generator.IGeneratorContext
 import dk.sdu.mmmi.mdsd.math.Program
+import dk.sdu.mmmi.mdsd.math.Parenthesis
+import dk.sdu.mmmi.mdsd.math.ExternalUse
 
 /**
  * Generates code from your model files on save.
@@ -37,7 +39,7 @@ class MathGenerator extends AbstractGenerator {
 		val result = math.compute
 		
 		var counter = 0;
-		fsa.generateFile("C:\\Users\\Peter\\Documents\\GitHub\\my_assignment3\\math_expression\\src\\math_expression", '''
+		fsa.generateFile('''math_expression/«className.name».java''', '''
 		package math_expression;
 		public class «className.name» {
 		
@@ -49,17 +51,19 @@ class MathGenerator extends AbstractGenerator {
 		  private External external;
 		  
 		  public «className.name»(External external) {
-		    this.external = external
+		    this.external = external;
 		  }
 		  «ENDIF»
 		
 		  public void compute() {
-		    x = 2 + 2;
-		    y = this.external.sqrt(x);
+		    «FOR variable : variables SEPARATOR '
+			'»
+			«variable.name» = «variable.computeExpression»;
+«ENDFOR»
 		  }
 		
 		«IF math.externals.size > 0»
-		  interface External {
+		  public interface External {
 		  	«FOR external : math.externals»
 		    public int «external.name»(«FOR param : external.parameters SEPARATOR ', '»«param» n«counter++»«ENDFOR»);
 		    «ENDFOR»
@@ -103,11 +107,23 @@ class MathGenerator extends AbstractGenerator {
 	}
 
 	def static dispatch String computeExpression(LetBinding exp) {
-		exp.body.computeExpression
+		return "(" + exp.body.computeExpression + ")"
 	}
 	
 	def static dispatch String computeExpression(VariableUse exp) {
-		exp.ref.computeBinding
+		return "(" + exp.ref.computeExpression + ")"
+	}
+	
+	def static dispatch String computeExpression(Parenthesis exp){
+		return "( " + exp.expression.computeExpression + " )"
+	}
+	
+	def static dispatch String computeExpression(ExternalUse exp){
+		if(exp.expressions.size > 0){
+			return '''this.external.«exp.ref.name»(«FOR expression : exp.expressions SEPARATOR ', '»«expression.computeExpression»«ENDFOR»)'''
+		}else{
+			return '''this.external.«exp.ref.name»()'''
+		}
 	}
 
 	def static dispatch String computeBinding(VarBinding binding){
@@ -117,7 +133,7 @@ class MathGenerator extends AbstractGenerator {
 	}
 	
 	def static dispatch String computeBinding(LetBinding binding){
-		binding.binding.computeExpression
+		return "(" + binding.binding.computeExpression + ")"
 	}
 	
 }

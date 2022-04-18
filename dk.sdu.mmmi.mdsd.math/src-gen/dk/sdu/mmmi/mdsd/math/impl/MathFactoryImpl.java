@@ -6,6 +6,7 @@ package dk.sdu.mmmi.mdsd.math.impl;
 import dk.sdu.mmmi.mdsd.math.*;
 
 import org.eclipse.emf.ecore.EClass;
+import org.eclipse.emf.ecore.EDataType;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EPackage;
 
@@ -67,11 +68,12 @@ public class MathFactoryImpl extends EFactoryImpl implements MathFactory
     {
       case MathPackage.MATH_EXP: return createMathExp();
       case MathPackage.EXTERNAL: return createExternal();
-      case MathPackage.PARMETER_TYPES: return createParmeterTypes();
       case MathPackage.PROGRAM: return createProgram();
       case MathPackage.VAR_BINDING: return createVarBinding();
       case MathPackage.EXPRESSION: return createExpression();
+      case MathPackage.EXTERNAL_USE: return createExternalUse();
       case MathPackage.LET_BINDING: return createLetBinding();
+      case MathPackage.PARENTHESIS: return createParenthesis();
       case MathPackage.BINDING: return createBinding();
       case MathPackage.VARIABLE_USE: return createVariableUse();
       case MathPackage.PLUS: return createPlus();
@@ -81,6 +83,40 @@ public class MathFactoryImpl extends EFactoryImpl implements MathFactory
       case MathPackage.MATH_NUMBER: return createMathNumber();
       default:
         throw new IllegalArgumentException("The class '" + eClass.getName() + "' is not a valid classifier");
+    }
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public Object createFromString(EDataType eDataType, String initialValue)
+  {
+    switch (eDataType.getClassifierID())
+    {
+      case MathPackage.PARMETER_TYPES:
+        return createParmeterTypesFromString(eDataType, initialValue);
+      default:
+        throw new IllegalArgumentException("The datatype '" + eDataType.getName() + "' is not a valid classifier");
+    }
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public String convertToString(EDataType eDataType, Object instanceValue)
+  {
+    switch (eDataType.getClassifierID())
+    {
+      case MathPackage.PARMETER_TYPES:
+        return convertParmeterTypesToString(eDataType, instanceValue);
+      default:
+        throw new IllegalArgumentException("The datatype '" + eDataType.getName() + "' is not a valid classifier");
     }
   }
 
@@ -106,18 +142,6 @@ public class MathFactoryImpl extends EFactoryImpl implements MathFactory
   {
     ExternalImpl external = new ExternalImpl();
     return external;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  @Override
-  public ParmeterTypes createParmeterTypes()
-  {
-    ParmeterTypesImpl parmeterTypes = new ParmeterTypesImpl();
-    return parmeterTypes;
   }
 
   /**
@@ -162,10 +186,34 @@ public class MathFactoryImpl extends EFactoryImpl implements MathFactory
    * @generated
    */
   @Override
+  public ExternalUse createExternalUse()
+  {
+    ExternalUseImpl externalUse = new ExternalUseImpl();
+    return externalUse;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
   public LetBinding createLetBinding()
   {
     LetBindingImpl letBinding = new LetBindingImpl();
     return letBinding;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public Parenthesis createParenthesis()
+  {
+    ParenthesisImpl parenthesis = new ParenthesisImpl();
+    return parenthesis;
   }
 
   /**
@@ -250,6 +298,28 @@ public class MathFactoryImpl extends EFactoryImpl implements MathFactory
   {
     MathNumberImpl mathNumber = new MathNumberImpl();
     return mathNumber;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public ParmeterTypes createParmeterTypesFromString(EDataType eDataType, String initialValue)
+  {
+    ParmeterTypes result = ParmeterTypes.get(initialValue);
+    if (result == null) throw new IllegalArgumentException("The value '" + initialValue + "' is not a valid enumerator of '" + eDataType.getName() + "'");
+    return result;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public String convertParmeterTypesToString(EDataType eDataType, Object instanceValue)
+  {
+    return instanceValue == null ? null : instanceValue.toString();
   }
 
   /**

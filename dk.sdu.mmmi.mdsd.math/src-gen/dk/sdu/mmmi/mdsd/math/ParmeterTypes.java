@@ -3,69 +3,223 @@
  */
 package dk.sdu.mmmi.mdsd.math;
 
-import org.eclipse.emf.ecore.EObject;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
+
+import org.eclipse.emf.common.util.Enumerator;
 
 /**
  * <!-- begin-user-doc -->
- * A representation of the model object '<em><b>Parmeter Types</b></em>'.
+ * A representation of the literals of the enumeration '<em><b>Parmeter Types</b></em>',
+ * and utility methods for working with them.
  * <!-- end-user-doc -->
- *
- * <p>
- * The following features are supported:
- * </p>
- * <ul>
- *   <li>{@link dk.sdu.mmmi.mdsd.math.ParmeterTypes#getInt <em>Int</em>}</li>
- *   <li>{@link dk.sdu.mmmi.mdsd.math.ParmeterTypes#getString <em>String</em>}</li>
- * </ul>
- *
  * @see dk.sdu.mmmi.mdsd.math.MathPackage#getParmeterTypes()
  * @model
  * @generated
  */
-public interface ParmeterTypes extends EObject
+public enum ParmeterTypes implements Enumerator
 {
   /**
-   * Returns the value of the '<em><b>Int</b></em>' attribute.
+   * The '<em><b>Int</b></em>' literal object.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @return the value of the '<em>Int</em>' attribute.
-   * @see #setInt(String)
-   * @see dk.sdu.mmmi.mdsd.math.MathPackage#getParmeterTypes_Int()
-   * @model
+   * @see #INT_VALUE
    * @generated
+   * @ordered
    */
-  String getInt();
+  INT(0, "int", "int"),
 
   /**
-   * Sets the value of the '{@link dk.sdu.mmmi.mdsd.math.ParmeterTypes#getInt <em>Int</em>}' attribute.
+   * The '<em><b>String</b></em>' literal object.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @param value the new value of the '<em>Int</em>' attribute.
-   * @see #getInt()
+   * @see #STRING_VALUE
    * @generated
+   * @ordered
    */
-  void setInt(String value);
+  STRING(1, "string", "string");
 
   /**
-   * Returns the value of the '<em><b>String</b></em>' attribute.
+   * The '<em><b>Int</b></em>' literal value.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @return the value of the '<em>String</em>' attribute.
-   * @see #setString(String)
-   * @see dk.sdu.mmmi.mdsd.math.MathPackage#getParmeterTypes_String()
-   * @model
+   * @see #INT
+   * @model name="int"
    * @generated
+   * @ordered
    */
-  String getString();
+  public static final int INT_VALUE = 0;
 
   /**
-   * Sets the value of the '{@link dk.sdu.mmmi.mdsd.math.ParmeterTypes#getString <em>String</em>}' attribute.
+   * The '<em><b>String</b></em>' literal value.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @param value the new value of the '<em>String</em>' attribute.
-   * @see #getString()
+   * @see #STRING
+   * @model name="string"
+   * @generated
+   * @ordered
+   */
+  public static final int STRING_VALUE = 1;
+
+  /**
+   * An array of all the '<em><b>Parmeter Types</b></em>' enumerators.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
    * @generated
    */
-  void setString(String value);
+  private static final ParmeterTypes[] VALUES_ARRAY =
+    new ParmeterTypes[]
+    {
+      INT,
+      STRING,
+    };
 
-} // ParmeterTypes
+  /**
+   * A public read-only list of all the '<em><b>Parmeter Types</b></em>' enumerators.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public static final List<ParmeterTypes> VALUES = Collections.unmodifiableList(Arrays.asList(VALUES_ARRAY));
+
+  /**
+   * Returns the '<em><b>Parmeter Types</b></em>' literal with the specified literal value.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @param literal the literal.
+   * @return the matching enumerator or <code>null</code>.
+   * @generated
+   */
+  public static ParmeterTypes get(String literal)
+  {
+    for (int i = 0; i < VALUES_ARRAY.length; ++i)
+    {
+      ParmeterTypes result = VALUES_ARRAY[i];
+      if (result.toString().equals(literal))
+      {
+        return result;
+      }
+    }
+    return null;
+  }
+
+  /**
+   * Returns the '<em><b>Parmeter Types</b></em>' literal with the specified name.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @param name the name.
+   * @return the matching enumerator or <code>null</code>.
+   * @generated
+   */
+  public static ParmeterTypes getByName(String name)
+  {
+    for (int i = 0; i < VALUES_ARRAY.length; ++i)
+    {
+      ParmeterTypes result = VALUES_ARRAY[i];
+      if (result.getName().equals(name))
+      {
+        return result;
+      }
+    }
+    return null;
+  }
+
+  /**
+   * Returns the '<em><b>Parmeter Types</b></em>' literal with the specified integer value.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @param value the integer value.
+   * @return the matching enumerator or <code>null</code>.
+   * @generated
+   */
+  public static ParmeterTypes get(int value)
+  {
+    switch (value)
+    {
+      case INT_VALUE: return INT;
+      case STRING_VALUE: return STRING;
+    }
+    return null;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  private final int value;
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  private final String name;
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  private final String literal;
+
+  /**
+   * Only this class can construct instances.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  private ParmeterTypes(int value, String name, String literal)
+  {
+    this.value = value;
+    this.name = name;
+    this.literal = literal;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public int getValue()
+  {
+    return value;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public String getName()
+  {
+    return name;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public String getLiteral()
+  {
+    return literal;
+  }
+
+  /**
+   * Returns the literal value of the enumerator, which is its string representation.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public String toString()
+  {
+    return literal;
+  }
+  
+} //ParmeterTypes
