@@ -20,8 +20,6 @@ import dk.sdu.mmmi.mdsd.math.VariableUse;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Set;
-import javax.swing.JOptionPane;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.resource.Resource;
@@ -37,15 +35,14 @@ import org.eclipse.xtext.generator.IGeneratorContext;
  */
 @SuppressWarnings("all")
 public class MathGenerator extends AbstractGenerator {
-  private static Map<String, Integer> variables;
+  private static Map<String, String> variables;
   
   @Override
   public void doGenerate(final Resource resource, final IFileSystemAccess2 fsa, final IGeneratorContext context) {
     final Program className = Iterators.<Program>filter(resource.getAllContents(), Program.class).next();
     final MathExp math = Iterators.<MathExp>filter(resource.getAllContents(), MathExp.class).next();
     final EList<VarBinding> variables = math.getVariables();
-    final Map<String, Integer> result = MathGenerator.compute(math);
-    this.displayPanel(result);
+    final Map<String, String> result = MathGenerator.compute(math);
     int counter = 0;
     StringConcatenation _builder = new StringConcatenation();
     _builder.append("package math_expression;");
@@ -140,26 +137,10 @@ public class MathGenerator extends AbstractGenerator {
     fsa.generateFile("C:\\Users\\Peter\\Documents\\GitHub\\my_assignment3\\math_expression\\src\\math_expression", _builder);
   }
   
-  public void displayPanel(final Map<String, Integer> result) {
-    String resultString = "";
-    Set<Map.Entry<String, Integer>> _entrySet = result.entrySet();
-    for (final Map.Entry<String, Integer> entry : _entrySet) {
-      String _resultString = resultString;
-      String _key = entry.getKey();
-      String _plus = ("var " + _key);
-      String _plus_1 = (_plus + " = ");
-      Integer _value = entry.getValue();
-      String _plus_2 = (_plus_1 + _value);
-      String _plus_3 = (_plus_2 + "\n");
-      resultString = (_resultString + _plus_3);
-    }
-    JOptionPane.showMessageDialog(null, resultString, "Math Language", JOptionPane.INFORMATION_MESSAGE);
-  }
-  
-  public static Map<String, Integer> compute(final MathExp math) {
-    Map<String, Integer> _xblockexpression = null;
+  public static Map<String, String> compute(final MathExp math) {
+    Map<String, String> _xblockexpression = null;
     {
-      HashMap<String, Integer> _hashMap = new HashMap<String, Integer>();
+      HashMap<String, String> _hashMap = new HashMap<String, String>();
       MathGenerator.variables = _hashMap;
       EList<VarBinding> _variables = math.getVariables();
       for (final VarBinding varBinding : _variables) {
@@ -170,49 +151,53 @@ public class MathGenerator extends AbstractGenerator {
     return _xblockexpression;
   }
   
-  protected static int _computeExpression(final VarBinding binding) {
-    MathGenerator.variables.put(binding.getName(), Integer.valueOf(MathGenerator.computeExpression(binding.getExpression())));
-    return (MathGenerator.variables.get(binding.getName())).intValue();
+  protected static String _computeExpression(final VarBinding binding) {
+    MathGenerator.variables.put(binding.getName(), MathGenerator.computeExpression(binding.getExpression()));
+    return MathGenerator.variables.get(binding.getName());
   }
   
-  protected static int _computeExpression(final MathNumber exp) {
-    return exp.getValue();
+  protected static String _computeExpression(final MathNumber exp) {
+    return Integer.valueOf(exp.getValue()).toString();
   }
   
-  protected static int _computeExpression(final Plus exp) {
-    int _computeExpression = MathGenerator.computeExpression(exp.getLeft());
-    int _computeExpression_1 = MathGenerator.computeExpression(exp.getRight());
-    return (_computeExpression + _computeExpression_1);
+  protected static String _computeExpression(final Plus exp) {
+    String _computeExpression = MathGenerator.computeExpression(exp.getLeft());
+    String _plus = (_computeExpression + " + ");
+    String _computeExpression_1 = MathGenerator.computeExpression(exp.getRight());
+    return (_plus + _computeExpression_1);
   }
   
-  protected static int _computeExpression(final Minus exp) {
-    int _computeExpression = MathGenerator.computeExpression(exp.getLeft());
-    int _computeExpression_1 = MathGenerator.computeExpression(exp.getRight());
-    return (_computeExpression - _computeExpression_1);
+  protected static String _computeExpression(final Minus exp) {
+    String _computeExpression = MathGenerator.computeExpression(exp.getLeft());
+    String _plus = (_computeExpression + " - ");
+    String _computeExpression_1 = MathGenerator.computeExpression(exp.getRight());
+    return (_plus + _computeExpression_1);
   }
   
-  protected static int _computeExpression(final Mult exp) {
-    int _computeExpression = MathGenerator.computeExpression(exp.getLeft());
-    int _computeExpression_1 = MathGenerator.computeExpression(exp.getRight());
-    return (_computeExpression * _computeExpression_1);
+  protected static String _computeExpression(final Mult exp) {
+    String _computeExpression = MathGenerator.computeExpression(exp.getLeft());
+    String _plus = (_computeExpression + " * ");
+    String _computeExpression_1 = MathGenerator.computeExpression(exp.getRight());
+    return (_plus + _computeExpression_1);
   }
   
-  protected static int _computeExpression(final Div exp) {
-    int _computeExpression = MathGenerator.computeExpression(exp.getLeft());
-    int _computeExpression_1 = MathGenerator.computeExpression(exp.getRight());
-    return (_computeExpression / _computeExpression_1);
+  protected static String _computeExpression(final Div exp) {
+    String _computeExpression = MathGenerator.computeExpression(exp.getLeft());
+    String _plus = (_computeExpression + " / ");
+    String _computeExpression_1 = MathGenerator.computeExpression(exp.getRight());
+    return (_plus + _computeExpression_1);
   }
   
-  protected static int _computeExpression(final LetBinding exp) {
+  protected static String _computeExpression(final LetBinding exp) {
     return MathGenerator.computeExpression(exp.getBody());
   }
   
-  protected static int _computeExpression(final VariableUse exp) {
+  protected static String _computeExpression(final VariableUse exp) {
     return MathGenerator.computeBinding(exp.getRef());
   }
   
-  protected static int _computeBinding(final VarBinding binding) {
-    Integer _xblockexpression = null;
+  protected static String _computeBinding(final VarBinding binding) {
+    String _xblockexpression = null;
     {
       boolean _containsKey = MathGenerator.variables.containsKey(binding.getName());
       boolean _not = (!_containsKey);
@@ -221,14 +206,14 @@ public class MathGenerator extends AbstractGenerator {
       }
       _xblockexpression = MathGenerator.variables.get(binding.getName());
     }
-    return (_xblockexpression).intValue();
+    return _xblockexpression;
   }
   
-  protected static int _computeBinding(final LetBinding binding) {
+  protected static String _computeBinding(final LetBinding binding) {
     return MathGenerator.computeExpression(binding.getBinding());
   }
   
-  public static int computeExpression(final EObject exp) {
+  public static String computeExpression(final EObject exp) {
     if (exp instanceof Div) {
       return _computeExpression((Div)exp);
     } else if (exp instanceof LetBinding) {
@@ -251,7 +236,7 @@ public class MathGenerator extends AbstractGenerator {
     }
   }
   
-  public static int computeBinding(final Binding binding) {
+  public static String computeBinding(final Binding binding) {
     if (binding instanceof LetBinding) {
       return _computeBinding((LetBinding)binding);
     } else if (binding instanceof VarBinding) {
