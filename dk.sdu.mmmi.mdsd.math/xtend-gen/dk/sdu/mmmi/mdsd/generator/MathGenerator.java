@@ -6,12 +6,15 @@ package dk.sdu.mmmi.mdsd.generator;
 import com.google.common.collect.Iterators;
 import dk.sdu.mmmi.mdsd.math.Binding;
 import dk.sdu.mmmi.mdsd.math.Div;
+import dk.sdu.mmmi.mdsd.math.External;
 import dk.sdu.mmmi.mdsd.math.LetBinding;
 import dk.sdu.mmmi.mdsd.math.MathExp;
 import dk.sdu.mmmi.mdsd.math.MathNumber;
 import dk.sdu.mmmi.mdsd.math.Minus;
 import dk.sdu.mmmi.mdsd.math.Mult;
+import dk.sdu.mmmi.mdsd.math.ParmeterTypes;
 import dk.sdu.mmmi.mdsd.math.Plus;
+import dk.sdu.mmmi.mdsd.math.Program;
 import dk.sdu.mmmi.mdsd.math.VarBinding;
 import dk.sdu.mmmi.mdsd.math.VariableUse;
 import java.util.Arrays;
@@ -22,6 +25,7 @@ import javax.swing.JOptionPane;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.resource.Resource;
+import org.eclipse.xtend2.lib.StringConcatenation;
 import org.eclipse.xtext.generator.AbstractGenerator;
 import org.eclipse.xtext.generator.IFileSystemAccess2;
 import org.eclipse.xtext.generator.IGeneratorContext;
@@ -37,9 +41,103 @@ public class MathGenerator extends AbstractGenerator {
   
   @Override
   public void doGenerate(final Resource resource, final IFileSystemAccess2 fsa, final IGeneratorContext context) {
+    final Program className = Iterators.<Program>filter(resource.getAllContents(), Program.class).next();
     final MathExp math = Iterators.<MathExp>filter(resource.getAllContents(), MathExp.class).next();
+    final EList<VarBinding> variables = math.getVariables();
     final Map<String, Integer> result = MathGenerator.compute(math);
     this.displayPanel(result);
+    int counter = 0;
+    StringConcatenation _builder = new StringConcatenation();
+    _builder.append("package math_expression;");
+    _builder.newLine();
+    _builder.append("public class ");
+    String _name = className.getName();
+    _builder.append(_name);
+    _builder.append(" {");
+    _builder.newLineIfNotEmpty();
+    _builder.newLine();
+    {
+      for(final VarBinding variable : variables) {
+        _builder.append("public int ");
+        String _name_1 = variable.getName();
+        _builder.append(_name_1);
+        _builder.append(";");
+        _builder.newLineIfNotEmpty();
+      }
+    }
+    _builder.newLine();
+    {
+      int _size = math.getExternals().size();
+      boolean _greaterThan = (_size > 0);
+      if (_greaterThan) {
+        _builder.append("private External external;");
+        _builder.newLine();
+        _builder.newLine();
+        _builder.append("public ");
+        String _name_2 = className.getName();
+        _builder.append(_name_2);
+        _builder.append("(External external) {");
+        _builder.newLineIfNotEmpty();
+        _builder.append("  ");
+        _builder.append("this.external = external");
+        _builder.newLine();
+        _builder.append("}");
+        _builder.newLine();
+      }
+    }
+    _builder.newLine();
+    _builder.append("  ");
+    _builder.append("public void compute() {");
+    _builder.newLine();
+    _builder.append("    ");
+    _builder.append("x = 2 + 2;");
+    _builder.newLine();
+    _builder.append("    ");
+    _builder.append("y = this.external.sqrt(x);");
+    _builder.newLine();
+    _builder.append("  ");
+    _builder.append("}");
+    _builder.newLine();
+    _builder.newLine();
+    {
+      int _size_1 = math.getExternals().size();
+      boolean _greaterThan_1 = (_size_1 > 0);
+      if (_greaterThan_1) {
+        _builder.append("interface External {");
+        _builder.newLine();
+        {
+          EList<External> _externals = math.getExternals();
+          for(final External external : _externals) {
+            _builder.append("public int ");
+            String _name_3 = external.getName();
+            _builder.append(_name_3);
+            _builder.append("(");
+            {
+              EList<ParmeterTypes> _parameters = external.getParameters();
+              boolean _hasElements = false;
+              for(final ParmeterTypes param : _parameters) {
+                if (!_hasElements) {
+                  _hasElements = true;
+                } else {
+                  _builder.appendImmediate(", ", "");
+                }
+                _builder.append(param);
+                _builder.append(" n");
+                int _plusPlus = counter++;
+                _builder.append(_plusPlus);
+              }
+            }
+            _builder.append(");");
+            _builder.newLineIfNotEmpty();
+          }
+        }
+        _builder.append("}");
+        _builder.newLine();
+      }
+    }
+    _builder.append("}");
+    _builder.newLine();
+    fsa.generateFile("C:\\Users\\Peter\\Documents\\GitHub\\my_assignment3\\math_expression\\src\\math_expression", _builder);
   }
   
   public void displayPanel(final Map<String, Integer> result) {

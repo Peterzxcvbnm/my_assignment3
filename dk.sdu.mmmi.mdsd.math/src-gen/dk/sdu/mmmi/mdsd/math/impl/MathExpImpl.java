@@ -3,12 +3,15 @@
  */
 package dk.sdu.mmmi.mdsd.math.impl;
 
+import dk.sdu.mmmi.mdsd.math.External;
 import dk.sdu.mmmi.mdsd.math.MathExp;
 import dk.sdu.mmmi.mdsd.math.MathPackage;
+import dk.sdu.mmmi.mdsd.math.Program;
 import dk.sdu.mmmi.mdsd.math.VarBinding;
 
 import java.util.Collection;
 
+import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;
 
 import org.eclipse.emf.common.util.EList;
@@ -16,6 +19,7 @@ import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.InternalEObject;
 
+import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
 
 import org.eclipse.emf.ecore.util.EObjectContainmentEList;
@@ -29,6 +33,8 @@ import org.eclipse.emf.ecore.util.InternalEList;
  * The following features are implemented:
  * </p>
  * <ul>
+ *   <li>{@link dk.sdu.mmmi.mdsd.math.impl.MathExpImpl#getProgram <em>Program</em>}</li>
+ *   <li>{@link dk.sdu.mmmi.mdsd.math.impl.MathExpImpl#getExternals <em>Externals</em>}</li>
  *   <li>{@link dk.sdu.mmmi.mdsd.math.impl.MathExpImpl#getVariables <em>Variables</em>}</li>
  * </ul>
  *
@@ -36,6 +42,26 @@ import org.eclipse.emf.ecore.util.InternalEList;
  */
 public class MathExpImpl extends MinimalEObjectImpl.Container implements MathExp
 {
+  /**
+   * The cached value of the '{@link #getProgram() <em>Program</em>}' containment reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see #getProgram()
+   * @generated
+   * @ordered
+   */
+  protected Program program;
+
+  /**
+   * The cached value of the '{@link #getExternals() <em>Externals</em>}' containment reference list.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see #getExternals()
+   * @generated
+   * @ordered
+   */
+  protected EList<External> externals;
+
   /**
    * The cached value of the '{@link #getVariables() <em>Variables</em>}' containment reference list.
    * <!-- begin-user-doc -->
@@ -73,6 +99,71 @@ public class MathExpImpl extends MinimalEObjectImpl.Container implements MathExp
    * @generated
    */
   @Override
+  public Program getProgram()
+  {
+    return program;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public NotificationChain basicSetProgram(Program newProgram, NotificationChain msgs)
+  {
+    Program oldProgram = program;
+    program = newProgram;
+    if (eNotificationRequired())
+    {
+      ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, MathPackage.MATH_EXP__PROGRAM, oldProgram, newProgram);
+      if (msgs == null) msgs = notification; else msgs.add(notification);
+    }
+    return msgs;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public void setProgram(Program newProgram)
+  {
+    if (newProgram != program)
+    {
+      NotificationChain msgs = null;
+      if (program != null)
+        msgs = ((InternalEObject)program).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - MathPackage.MATH_EXP__PROGRAM, null, msgs);
+      if (newProgram != null)
+        msgs = ((InternalEObject)newProgram).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - MathPackage.MATH_EXP__PROGRAM, null, msgs);
+      msgs = basicSetProgram(newProgram, msgs);
+      if (msgs != null) msgs.dispatch();
+    }
+    else if (eNotificationRequired())
+      eNotify(new ENotificationImpl(this, Notification.SET, MathPackage.MATH_EXP__PROGRAM, newProgram, newProgram));
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public EList<External> getExternals()
+  {
+    if (externals == null)
+    {
+      externals = new EObjectContainmentEList<External>(External.class, this, MathPackage.MATH_EXP__EXTERNALS);
+    }
+    return externals;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
   public EList<VarBinding> getVariables()
   {
     if (variables == null)
@@ -92,6 +183,10 @@ public class MathExpImpl extends MinimalEObjectImpl.Container implements MathExp
   {
     switch (featureID)
     {
+      case MathPackage.MATH_EXP__PROGRAM:
+        return basicSetProgram(null, msgs);
+      case MathPackage.MATH_EXP__EXTERNALS:
+        return ((InternalEList<?>)getExternals()).basicRemove(otherEnd, msgs);
       case MathPackage.MATH_EXP__VARIABLES:
         return ((InternalEList<?>)getVariables()).basicRemove(otherEnd, msgs);
     }
@@ -108,6 +203,10 @@ public class MathExpImpl extends MinimalEObjectImpl.Container implements MathExp
   {
     switch (featureID)
     {
+      case MathPackage.MATH_EXP__PROGRAM:
+        return getProgram();
+      case MathPackage.MATH_EXP__EXTERNALS:
+        return getExternals();
       case MathPackage.MATH_EXP__VARIABLES:
         return getVariables();
     }
@@ -125,6 +224,13 @@ public class MathExpImpl extends MinimalEObjectImpl.Container implements MathExp
   {
     switch (featureID)
     {
+      case MathPackage.MATH_EXP__PROGRAM:
+        setProgram((Program)newValue);
+        return;
+      case MathPackage.MATH_EXP__EXTERNALS:
+        getExternals().clear();
+        getExternals().addAll((Collection<? extends External>)newValue);
+        return;
       case MathPackage.MATH_EXP__VARIABLES:
         getVariables().clear();
         getVariables().addAll((Collection<? extends VarBinding>)newValue);
@@ -143,6 +249,12 @@ public class MathExpImpl extends MinimalEObjectImpl.Container implements MathExp
   {
     switch (featureID)
     {
+      case MathPackage.MATH_EXP__PROGRAM:
+        setProgram((Program)null);
+        return;
+      case MathPackage.MATH_EXP__EXTERNALS:
+        getExternals().clear();
+        return;
       case MathPackage.MATH_EXP__VARIABLES:
         getVariables().clear();
         return;
@@ -160,6 +272,10 @@ public class MathExpImpl extends MinimalEObjectImpl.Container implements MathExp
   {
     switch (featureID)
     {
+      case MathPackage.MATH_EXP__PROGRAM:
+        return program != null;
+      case MathPackage.MATH_EXP__EXTERNALS:
+        return externals != null && !externals.isEmpty();
       case MathPackage.MATH_EXP__VARIABLES:
         return variables != null && !variables.isEmpty();
     }

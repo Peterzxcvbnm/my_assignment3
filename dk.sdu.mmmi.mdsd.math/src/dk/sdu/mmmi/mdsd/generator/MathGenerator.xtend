@@ -19,6 +19,7 @@ import org.eclipse.emf.ecore.resource.Resource
 import org.eclipse.xtext.generator.AbstractGenerator
 import org.eclipse.xtext.generator.IFileSystemAccess2
 import org.eclipse.xtext.generator.IGeneratorContext
+import dk.sdu.mmmi.mdsd.math.Program
 
 /**
  * Generates code from your model files on save.
@@ -30,9 +31,42 @@ class MathGenerator extends AbstractGenerator {
 	static Map<String, Integer> variables;
 
 	override void doGenerate(Resource resource, IFileSystemAccess2 fsa, IGeneratorContext context) {
+		val className = resource.allContents.filter(Program).next
 		val math = resource.allContents.filter(MathExp).next
+		val variables = math.variables
 		val result = math.compute
 		result.displayPanel
+		var counter = 0;
+		fsa.generateFile("C:\\Users\\Peter\\Documents\\GitHub\\my_assignment3\\math_expression\\src\\math_expression", '''
+		package math_expression;
+		public class «className.name» {
+		
+		«FOR variable : variables»
+		public int «variable.name»;
+		«ENDFOR»
+		
+		«IF math.externals.size > 0»
+		  private External external;
+		  
+		  public «className.name»(External external) {
+		    this.external = external
+		  }
+		  «ENDIF»
+		
+		  public void compute() {
+		    x = 2 + 2;
+		    y = this.external.sqrt(x);
+		  }
+		
+		«IF math.externals.size > 0»
+		  interface External {
+		  	«FOR external : math.externals»
+		    public int «external.name»(«FOR param : external.parameters SEPARATOR ', '»«param» n«counter++»«ENDFOR»);
+		    «ENDFOR»
+		  }
+		  «ENDIF»
+		}
+		''')
 		
 	}
 		

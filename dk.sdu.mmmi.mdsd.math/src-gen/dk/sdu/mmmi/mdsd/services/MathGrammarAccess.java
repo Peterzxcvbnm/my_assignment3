@@ -26,19 +26,151 @@ public class MathGrammarAccess extends AbstractElementFinder.AbstractGrammarElem
 	
 	public class MathExpElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "dk.sdu.mmmi.mdsd.Math.MathExp");
-		private final Assignment cVariablesAssignment = (Assignment)rule.eContents().get(1);
-		private final RuleCall cVariablesVarBindingParserRuleCall_0 = (RuleCall)cVariablesAssignment.eContents().get(0);
+		private final Group cGroup = (Group)rule.eContents().get(1);
+		private final Assignment cProgramAssignment_0 = (Assignment)cGroup.eContents().get(0);
+		private final RuleCall cProgramProgramParserRuleCall_0_0 = (RuleCall)cProgramAssignment_0.eContents().get(0);
+		private final Assignment cExternalsAssignment_1 = (Assignment)cGroup.eContents().get(1);
+		private final RuleCall cExternalsExternalParserRuleCall_1_0 = (RuleCall)cExternalsAssignment_1.eContents().get(0);
+		private final Assignment cVariablesAssignment_2 = (Assignment)cGroup.eContents().get(2);
+		private final RuleCall cVariablesVarBindingParserRuleCall_2_0 = (RuleCall)cVariablesAssignment_2.eContents().get(0);
 		
 		//MathExp:
-		//    variables += VarBinding*
+		//    program=Program externals += External variables += VarBinding*
 		//;
 		@Override public ParserRule getRule() { return rule; }
 		
+		//program=Program externals += External variables += VarBinding*
+		public Group getGroup() { return cGroup; }
+		
+		//program=Program
+		public Assignment getProgramAssignment_0() { return cProgramAssignment_0; }
+		
+		//Program
+		public RuleCall getProgramProgramParserRuleCall_0_0() { return cProgramProgramParserRuleCall_0_0; }
+		
+		//externals += External
+		public Assignment getExternalsAssignment_1() { return cExternalsAssignment_1; }
+		
+		//External
+		public RuleCall getExternalsExternalParserRuleCall_1_0() { return cExternalsExternalParserRuleCall_1_0; }
+		
 		//variables += VarBinding*
-		public Assignment getVariablesAssignment() { return cVariablesAssignment; }
+		public Assignment getVariablesAssignment_2() { return cVariablesAssignment_2; }
 		
 		//VarBinding
-		public RuleCall getVariablesVarBindingParserRuleCall_0() { return cVariablesVarBindingParserRuleCall_0; }
+		public RuleCall getVariablesVarBindingParserRuleCall_2_0() { return cVariablesVarBindingParserRuleCall_2_0; }
+	}
+	public class ExternalElements extends AbstractParserRuleElementFinder {
+		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "dk.sdu.mmmi.mdsd.Math.External");
+		private final Group cGroup = (Group)rule.eContents().get(1);
+		private final Keyword cExternalKeyword_0 = (Keyword)cGroup.eContents().get(0);
+		private final Assignment cNameAssignment_1 = (Assignment)cGroup.eContents().get(1);
+		private final RuleCall cNameIDTerminalRuleCall_1_0 = (RuleCall)cNameAssignment_1.eContents().get(0);
+		private final Keyword cLeftParenthesisKeyword_2 = (Keyword)cGroup.eContents().get(2);
+		private final Group cGroup_3 = (Group)cGroup.eContents().get(3);
+		private final Assignment cParametersAssignment_3_0 = (Assignment)cGroup_3.eContents().get(0);
+		private final RuleCall cParametersParmeterTypesParserRuleCall_3_0_0 = (RuleCall)cParametersAssignment_3_0.eContents().get(0);
+		private final Group cGroup_3_1 = (Group)cGroup_3.eContents().get(1);
+		private final Keyword cCommaKeyword_3_1_0 = (Keyword)cGroup_3_1.eContents().get(0);
+		private final Assignment cParametersAssignment_3_1_1 = (Assignment)cGroup_3_1.eContents().get(1);
+		private final RuleCall cParametersParmeterTypesParserRuleCall_3_1_1_0 = (RuleCall)cParametersAssignment_3_1_1.eContents().get(0);
+		private final Keyword cRightParenthesisKeyword_4 = (Keyword)cGroup.eContents().get(4);
+		
+		//External:
+		//    'external' name=ID '(' (parameters+=ParmeterTypes ("," parameters+=ParmeterTypes)*)? ')'
+		//;
+		@Override public ParserRule getRule() { return rule; }
+		
+		//'external' name=ID '(' (parameters+=ParmeterTypes ("," parameters+=ParmeterTypes)*)? ')'
+		public Group getGroup() { return cGroup; }
+		
+		//'external'
+		public Keyword getExternalKeyword_0() { return cExternalKeyword_0; }
+		
+		//name=ID
+		public Assignment getNameAssignment_1() { return cNameAssignment_1; }
+		
+		//ID
+		public RuleCall getNameIDTerminalRuleCall_1_0() { return cNameIDTerminalRuleCall_1_0; }
+		
+		//'('
+		public Keyword getLeftParenthesisKeyword_2() { return cLeftParenthesisKeyword_2; }
+		
+		//(parameters+=ParmeterTypes ("," parameters+=ParmeterTypes)*)?
+		public Group getGroup_3() { return cGroup_3; }
+		
+		//parameters+=ParmeterTypes
+		public Assignment getParametersAssignment_3_0() { return cParametersAssignment_3_0; }
+		
+		//ParmeterTypes
+		public RuleCall getParametersParmeterTypesParserRuleCall_3_0_0() { return cParametersParmeterTypesParserRuleCall_3_0_0; }
+		
+		//("," parameters+=ParmeterTypes)*
+		public Group getGroup_3_1() { return cGroup_3_1; }
+		
+		//","
+		public Keyword getCommaKeyword_3_1_0() { return cCommaKeyword_3_1_0; }
+		
+		//parameters+=ParmeterTypes
+		public Assignment getParametersAssignment_3_1_1() { return cParametersAssignment_3_1_1; }
+		
+		//ParmeterTypes
+		public RuleCall getParametersParmeterTypesParserRuleCall_3_1_1_0() { return cParametersParmeterTypesParserRuleCall_3_1_1_0; }
+		
+		//')'
+		public Keyword getRightParenthesisKeyword_4() { return cRightParenthesisKeyword_4; }
+	}
+	public class ParmeterTypesElements extends AbstractParserRuleElementFinder {
+		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "dk.sdu.mmmi.mdsd.Math.ParmeterTypes");
+		private final Alternatives cAlternatives = (Alternatives)rule.eContents().get(1);
+		private final Assignment cIntAssignment_0 = (Assignment)cAlternatives.eContents().get(0);
+		private final Keyword cIntIntKeyword_0_0 = (Keyword)cIntAssignment_0.eContents().get(0);
+		private final Assignment cStringAssignment_1 = (Assignment)cAlternatives.eContents().get(1);
+		private final Keyword cStringStringKeyword_1_0 = (Keyword)cStringAssignment_1.eContents().get(0);
+		
+		//ParmeterTypes:
+		//    int='int' | string='string'
+		//;
+		@Override public ParserRule getRule() { return rule; }
+		
+		//int='int' | string='string'
+		public Alternatives getAlternatives() { return cAlternatives; }
+		
+		//int='int'
+		public Assignment getIntAssignment_0() { return cIntAssignment_0; }
+		
+		//'int'
+		public Keyword getIntIntKeyword_0_0() { return cIntIntKeyword_0_0; }
+		
+		//string='string'
+		public Assignment getStringAssignment_1() { return cStringAssignment_1; }
+		
+		//'string'
+		public Keyword getStringStringKeyword_1_0() { return cStringStringKeyword_1_0; }
+	}
+	public class ProgramElements extends AbstractParserRuleElementFinder {
+		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "dk.sdu.mmmi.mdsd.Math.Program");
+		private final Group cGroup = (Group)rule.eContents().get(1);
+		private final Keyword cProgramKeyword_0 = (Keyword)cGroup.eContents().get(0);
+		private final Assignment cNameAssignment_1 = (Assignment)cGroup.eContents().get(1);
+		private final RuleCall cNameIDTerminalRuleCall_1_0 = (RuleCall)cNameAssignment_1.eContents().get(0);
+		
+		//Program:
+		//    'program' name=ID
+		//;
+		@Override public ParserRule getRule() { return rule; }
+		
+		//'program' name=ID
+		public Group getGroup() { return cGroup; }
+		
+		//'program'
+		public Keyword getProgramKeyword_0() { return cProgramKeyword_0; }
+		
+		//name=ID
+		public Assignment getNameAssignment_1() { return cNameAssignment_1; }
+		
+		//ID
+		public RuleCall getNameIDTerminalRuleCall_1_0() { return cNameIDTerminalRuleCall_1_0; }
 	}
 	public class VarBindingElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "dk.sdu.mmmi.mdsd.Math.VarBinding");
@@ -335,6 +467,9 @@ public class MathGrammarAccess extends AbstractElementFinder.AbstractGrammarElem
 	
 	
 	private final MathExpElements pMathExp;
+	private final ExternalElements pExternal;
+	private final ParmeterTypesElements pParmeterTypes;
+	private final ProgramElements pProgram;
 	private final VarBindingElements pVarBinding;
 	private final ExpElements pExp;
 	private final FactorElements pFactor;
@@ -353,6 +488,9 @@ public class MathGrammarAccess extends AbstractElementFinder.AbstractGrammarElem
 		this.grammar = internalFindGrammar(grammarProvider);
 		this.gaTerminals = gaTerminals;
 		this.pMathExp = new MathExpElements();
+		this.pExternal = new ExternalElements();
+		this.pParmeterTypes = new ParmeterTypesElements();
+		this.pProgram = new ProgramElements();
 		this.pVarBinding = new VarBindingElements();
 		this.pExp = new ExpElements();
 		this.pFactor = new FactorElements();
@@ -390,7 +528,7 @@ public class MathGrammarAccess extends AbstractElementFinder.AbstractGrammarElem
 
 	
 	//MathExp:
-	//    variables += VarBinding*
+	//    program=Program externals += External variables += VarBinding*
 	//;
 	public MathExpElements getMathExpAccess() {
 		return pMathExp;
@@ -398,6 +536,39 @@ public class MathGrammarAccess extends AbstractElementFinder.AbstractGrammarElem
 	
 	public ParserRule getMathExpRule() {
 		return getMathExpAccess().getRule();
+	}
+	
+	//External:
+	//    'external' name=ID '(' (parameters+=ParmeterTypes ("," parameters+=ParmeterTypes)*)? ')'
+	//;
+	public ExternalElements getExternalAccess() {
+		return pExternal;
+	}
+	
+	public ParserRule getExternalRule() {
+		return getExternalAccess().getRule();
+	}
+	
+	//ParmeterTypes:
+	//    int='int' | string='string'
+	//;
+	public ParmeterTypesElements getParmeterTypesAccess() {
+		return pParmeterTypes;
+	}
+	
+	public ParserRule getParmeterTypesRule() {
+		return getParmeterTypesAccess().getRule();
+	}
+	
+	//Program:
+	//    'program' name=ID
+	//;
+	public ProgramElements getProgramAccess() {
+		return pProgram;
+	}
+	
+	public ParserRule getProgramRule() {
+		return getProgramAccess().getRule();
 	}
 	
 	//VarBinding:
